@@ -18,4 +18,13 @@ public class WordKanji {
     @ManyToOne
     @JoinColumn(name = "kanji_id", nullable = false)
     private Kanji kanji;
+    
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
+
+    public Word getWord() { return word; }
+    public void setWord(Word word) { this.word = word; }
+
+    public Kanji getKanji() { return kanji; }
+    public void setKanji(Kanji kanji) { this.kanji = kanji; }
 }
