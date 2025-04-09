@@ -6,7 +6,7 @@ import java.sql.SQLException;
 
 public class TestSQLConnections {
 	public static void main(String[] args) {
-        String url = "jdbc:sqlserver://localhost:1433;databaseName=JPDict;encrypt=true;trustServerCertificate=true";
+        String url = "jdbc:sqlserver://localhost:1433;databaseName=JPDictionary;encrypt=true;trustServerCertificate=true";
         String user = "sa";
         String password = "20022005";
 

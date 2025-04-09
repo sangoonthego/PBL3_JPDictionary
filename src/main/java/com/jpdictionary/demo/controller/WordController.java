@@ -29,4 +29,10 @@ public class WordController {
     public Word fetchWord(@PathVariable String word) {
         return wordService.fetchWordFromAPI(word);
     }
+    
+    @PostMapping
+    public Word createWord(@RequestBody Word word) {
+        return wordService.saveWord(word);
+    }
+
 }

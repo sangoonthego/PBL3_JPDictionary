@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.http.ResponseEntity;
+
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -40,4 +42,10 @@ public class WordService {
         }
         return null;
     }
+    
+    public Word saveWord(Word word) {
+        word.setCreatedAt(new Date()); // nếu muốn tự thêm createdAt
+        return wordRepository.save(word);
+    }
+
 }
