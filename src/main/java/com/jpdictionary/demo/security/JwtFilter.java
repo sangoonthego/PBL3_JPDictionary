@@ -13,8 +13,6 @@ import org.springframework.security.web.authentication.WebAuthenticationDetailsS
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
-import com.jpdictionary.demo.security.CustomUserDetailsService;
-
 import java.io.IOException;
 
 @Component
@@ -31,26 +29,36 @@ public class JwtFilter extends OncePerRequestFilter {
                                     FilterChain filterChain)
             throws ServletException, IOException {
 
+        // Lấy token từ header Authorization
         String authHeader = request.getHeader("Authorization");
 
+        // Kiểm tra nếu có header Authorization và token bắt đầu bằng "Bearer "
         if (authHeader != null && authHeader.startsWith("Bearer ")) {
-            String token = authHeader.substring(7);
+            String token = authHeader.substring(7); // Lấy token sau "Bearer "
 
             try {
+                // Xác thực token và lấy username
                 String username = jwtUtil.validateTokenAndGetUsername(token);
-                UserDetails userDetails = userDetailsService.loadUserByUsername(username);
-                UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
-                        userDetails, null, userDetails.getAuthorities());
+                if (username != null) {
+                    // Lấy thông tin người dùng từ service
+                    UserDetails userDetails = userDetailsService.loadUserByUsername(username);
 
-                authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-                SecurityContextHolder.getContext().setAuthentication(authToken);
+                    // Tạo đối tượng Authentication token và lưu vào SecurityContextHolder
+                    UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
+                            userDetails, null, userDetails.getAuthorities());
+                    authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
 
+                    // Lưu thông tin Authentication vào context
+                    SecurityContextHolder.getContext().setAuthentication(authToken);
+                }
             } catch (Exception e) {
-                response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Invalid JWT Token");
+                // Nếu có lỗi trong quá trình xác thực token
+                response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Invalid or Expired JWT Token");
                 return;
             }
         }
 
+        // Tiếp tục với các filter khác
         filterChain.doFilter(request, response);
     }
 }
