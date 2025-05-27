@@ -21,7 +21,7 @@ public class CustomUserDetailsService implements UserDetailsService {
                 .orElseThrow(() -> new UsernameNotFoundException("User Not Found: " + username));
 
         if (user.getRole() == null) {
-            throw new UsernameNotFoundException("User has no role assigned.");
+            throw new UsernameNotFoundException("User has no role assigned!!!");
         }
 
         SimpleGrantedAuthority authority = new SimpleGrantedAuthority(user.getRole().getName());

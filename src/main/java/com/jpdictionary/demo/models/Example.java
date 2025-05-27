@@ -17,4 +17,34 @@ public class Example {
 
     @Column(nullable = false)
     private String sentenceJp;
+    
+    public Example() {
+    	
+    }
+    
+    public Example(Word word, String sentenceJp) {
+		this.word = word;
+		this.sentenceJp = sentenceJp;
+	}
+
+	public Long getId() {
+		return id;
+	}
+	
+	public void setId(Long id) {
+		// TODO Auto-generated method stub
+		this.id = id;
+	}  
+
+	public void setWord(Word word) {
+		this.word = word;
+	}
+
+	public String getSentenceJp() {
+		return sentenceJp;
+	}
+
+	public void setSentenceJp(String sentenceJp) {
+		this.sentenceJp = sentenceJp;
+	}
 }

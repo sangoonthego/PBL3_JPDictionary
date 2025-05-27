@@ -14,8 +14,40 @@ public class FlashcardController {
     @Autowired
     private FlashcardService flashcardService;
 
+    // Fetch từ API ngoài
     @GetMapping("/fetch")
     public List<Flashcard> fetchFlashcards() {
         return flashcardService.getFlashcardsFromAPI();
     }
+
+    // CREATE
+    @PostMapping
+    public Flashcard createFlashcard(@RequestBody Flashcard flashcard) {
+        return flashcardService.saveFlashcard(flashcard);
+    }
+
+    // READ ALL
+    @GetMapping
+    public List<Flashcard> getAllFlashcards() {
+        return flashcardService.getAllFlashcards();
+    }
+
+    // READ ONE
+    @GetMapping("/{id}")
+    public Flashcard getFlashcardById(@PathVariable Long id) {
+        return flashcardService.getFlashcardById(id);
+    }
+
+    // UPDATE
+    @PutMapping("/{id}")
+    public Flashcard updateFlashcard(@PathVariable Long id, @RequestBody Flashcard flashcard) {
+        return flashcardService.updateFlashcard(id, flashcard);
+    }
+
+    // DELETE
+    @DeleteMapping("/{id}")
+    public void deleteFlashcard(@PathVariable Long id) {
+        flashcardService.deleteFlashcard(id);
+    }
 }
+

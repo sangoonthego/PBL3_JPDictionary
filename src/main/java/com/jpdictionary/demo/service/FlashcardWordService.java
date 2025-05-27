@@ -25,4 +25,29 @@ public class FlashcardWordService {
         
         return flashcardWordRepository.findAll();
     }
+    
+    public FlashcardWord saveFlashcardWord(FlashcardWord flashcardWord) {
+        return flashcardWordRepository.save(flashcardWord);
+    }
+
+    public List<FlashcardWord> getAllFlashcardWords() {
+        return flashcardWordRepository.findAll();
+    }
+
+    public FlashcardWord getFlashcardWordById(Long id) {
+        return flashcardWordRepository.findById(id).orElse(null);
+    }
+
+    public FlashcardWord updateFlashcardWord(Long id, FlashcardWord flashcardWord) {
+        FlashcardWord existing = flashcardWordRepository.findById(id).orElse(null);
+        if (existing != null) {
+            flashcardWord.setId(id);
+            return flashcardWordRepository.save(flashcardWord);
+        }
+        return null;
+    }
+
+    public void deleteFlashcardWord(Long id) {
+        flashcardWordRepository.deleteById(id);
+    }
 }

@@ -18,4 +18,30 @@ public class PartOfSpeechController {
     public List<PartOfSpeech> fetchPartsOfSpeech() {
         return partOfSpeechService.getPartsOfSpeechFromAPI();
     }
+    
+    @GetMapping
+    public List<PartOfSpeech> getAllPartsOfSpeech() {
+        return partOfSpeechService.getAllPartsOfSpeech();
+    }
+
+    @GetMapping("/{id}")
+    public PartOfSpeech getPartOfSpeechById(@PathVariable Long id) {
+        return partOfSpeechService.getPartOfSpeechById(id);
+    }
+
+    @PostMapping
+    public PartOfSpeech createPartOfSpeech(@RequestBody PartOfSpeech pos) {
+        return partOfSpeechService.createPartOfSpeech(pos);
+    }
+
+    @PutMapping("/{id}")
+    public PartOfSpeech updatePartOfSpeech(@PathVariable Long id, @RequestBody PartOfSpeech pos) {
+        return partOfSpeechService.updatePartOfSpeech(id, pos);
+    }
+
+    @DeleteMapping("/{id}")
+    public String deletePartOfSpeech(@PathVariable Long id) {
+        partOfSpeechService.deletePartOfSpeech(id);
+        return "Part of speech deleted successfully!";
+    }
 }

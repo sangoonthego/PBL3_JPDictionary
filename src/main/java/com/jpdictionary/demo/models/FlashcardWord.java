@@ -18,4 +18,30 @@ public class FlashcardWord {
     @ManyToOne
     @JoinColumn(name = "word_id", nullable = false)
     private Word word;
+    
+    public FlashcardWord() {
+		
+	}
+    
+    public FlashcardWord(Flashcard flashcard, Word word) {
+		this.flashcard = flashcard;
+		this.word = word;
+	}
+    
+    public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		// TODO Auto-generated method stub
+		this.id = id;
+	}
+	
+	public Flashcard getFlashcard() {
+		return flashcard;
+	}
+	
+	public void setFlashcard(Flashcard flashcard) {
+		this.flashcard = flashcard;
+	}
 }

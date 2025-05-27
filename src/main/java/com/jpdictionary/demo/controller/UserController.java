@@ -3,6 +3,7 @@ package com.jpdictionary.demo.controller;
 import com.jpdictionary.demo.models.User;
 import com.jpdictionary.demo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -15,63 +16,49 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    // Lấy danh sách user
     @GetMapping
     public List<User> getAllUsers() {
         return userService.getAllUsers();
     }
 
-    // Lấy user theo ID
     @GetMapping("/{id}")
     public Optional<User> getUserById(@PathVariable Long id) {
         return userService.getUserById(id);
     }
 
-    // Đăng ký user mới
-    @PostMapping("/register")
-    public User registerUser(@RequestBody User user) {
-        return userService.registerUser(user);
+    @PostMapping
+    public User createUser(@RequestBody User user) {
+        return userService.saveUser(user);
     }
 
-    // Xóa user
+    @PutMapping("/{id}")
+    public ResponseEntity<User> updateUser(@PathVariable Long id, @RequestBody User updatedUser) {
+        Optional<User> existingUser = userService.getUserById(id);
+        if (existingUser.isPresent()) {
+            updatedUser.setId(id);
+            updatedUser.setCreatedAt(existingUser.get().getCreatedAt()); // giữ nguyên createdAt
+            return ResponseEntity.ok(userService.saveUser(updatedUser));
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
     @DeleteMapping("/{id}")
     public void deleteUser(@PathVariable Long id) {
         userService.deleteUser(id);
     }
+
+    @GetMapping("/fetch-external")
+    public List<User> fetchUsersFromAPI() {
+        return userService.fetchUsersFromAPI();
+    }
+
+    @PostMapping("/save-external")
+    public String saveUsersFromAPI() {
+        userService.saveUsersFromAPI();
+        return "Users fetched and saved successfully!";
+    }
 }
 
-//@RestController
-//@RequestMapping("/api/users")
-//public class UserController {
-//
-//    @Autowired
-//    private UserService userService;
-//
-//    @GetMapping("/fetch-external")
-//    public List<User> fetchUsersFromAPI() {
-//        return userService.fetchUsersFromAPI();
-//    }
-//
-//    @PostMapping("/save-external")
-//    public String saveUsersFromAPI() {
-//        userService.saveUsersFromAPI();
-//        return "Users fetched and saved successfully!";
-//    }
-//
-//    @GetMapping
-//    public List<User> getAllUsers() {
-//        return userService.getAllUsers();
-//    }
-//
-//    @GetMapping("/{id}")
-//    public Optional<User> getUserById(@PathVariable Long id) {
-//        return userService.getUserById(id);
-//    }
-//
-//    @DeleteMapping("/{id}")
-//    public void deleteUser(@PathVariable Long id) {
-//        userService.deleteUser(id);
-//    }
-//} // co sư dung api
 
 

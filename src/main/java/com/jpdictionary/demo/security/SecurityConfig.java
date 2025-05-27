@@ -1,7 +1,5 @@
 package com.jpdictionary.demo.security;
 
-import com.jpdictionary.demo.security.JwtFilter;
-import com.jpdictionary.demo.security.CustomUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -18,7 +16,6 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.security.web.access.AccessDeniedHandlerImpl;
-import org.springframework.security.web.authentication.Http403ForbiddenEntryPoint;
 
 @Configuration
 public class SecurityConfig {
@@ -26,8 +23,8 @@ public class SecurityConfig {
     @Autowired
     private JwtFilter jwtFilter;
 
-    @Autowired
-    private CustomUserDetailsService customUserDetailsService;
+//    @Autowired
+//    private CustomUserDetailsService customUserDetailsService;
 
     @Autowired
     private JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;  // Thêm JwtAuthenticationEntryPoint
@@ -47,20 +44,31 @@ public class SecurityConfig {
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)  // Thêm JwtFilter để kiểm tra token
                 .build();
     }
+    
+//    @Bean
+//    SecurityFilterChain filterChain1(HttpSecurity http) throws Exception {
+//        http
+//            .csrf(csrf -> csrf.disable()) // Tắt CSRF để test API
+//            .authorizeHttpRequests(auth -> auth
+//                .anyRequest().permitAll() // Cho phép mọi request
+//            );
+//
+//        return http.build();
+//    }
 
     @Bean
-    public PasswordEncoder passwordEncoder() {
+    PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();  // Mã hóa mật khẩu bằng BCrypt
     }
 
     @Bean
-    public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
-        return config.getAuthenticationManager();  // Cung cấp AuthenticationManager
+    AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
+        return config.getAuthenticationManager();  
     }
 
     // Bean để xử lý Access Denied 403
     @Bean
-    public AccessDeniedHandler accessDeniedHandler() {
+    AccessDeniedHandler accessDeniedHandler() {
         return new AccessDeniedHandlerImpl();  // Cấu hình xử lý lỗi 403 khi không có quyền truy cập
     }
 }

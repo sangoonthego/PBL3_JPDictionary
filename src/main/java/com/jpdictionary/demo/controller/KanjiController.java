@@ -18,4 +18,30 @@ public class KanjiController {
     public List<Kanji> fetchKanji() {
         return kanjiService.getKanjiFromAPI();
     }
+    
+    @GetMapping
+    public List<Kanji> getAllKanji() {
+        return kanjiService.getAllKanji();
+    }
+
+    @GetMapping("/{id}")
+    public Kanji getKanjiById(@PathVariable Long id) {
+        return kanjiService.getKanjiById(id);
+    }
+
+    @PostMapping
+    public Kanji createKanji(@RequestBody Kanji kanji) {
+        return kanjiService.createKanji(kanji);
+    }
+
+    @PutMapping("/{id}")
+    public Kanji updateKanji(@PathVariable Long id, @RequestBody Kanji kanji) {
+        return kanjiService.updateKanji(id, kanji);
+    }
+
+    @DeleteMapping("/{id}")
+    public String deleteKanji(@PathVariable Long id) {
+        kanjiService.deleteKanji(id);
+        return "Kanji deleted successfully!";
+    }
 }

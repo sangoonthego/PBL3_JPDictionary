@@ -26,4 +26,29 @@ public class KanjiService {
         
         return kanjiRepository.findAll();
     }
+    
+    public List<Kanji> getAllKanji() {
+        return kanjiRepository.findAll();
+    }
+
+    public Kanji getKanjiById(Long id) {
+        return kanjiRepository.findById(id).orElse(null);
+    }
+
+    public Kanji createKanji(Kanji kanji) {
+        return kanjiRepository.save(kanji);
+    }
+
+    public Kanji updateKanji(Long id, Kanji kanji) {
+        Kanji existing = getKanjiById(id);
+        if (existing != null) {
+            kanji.setId(id);
+            return kanjiRepository.save(kanji);
+        }
+        return null;
+    }
+
+    public void deleteKanji(Long id) {
+        kanjiRepository.deleteById(id);
+    }
 }

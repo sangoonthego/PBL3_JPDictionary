@@ -19,6 +19,16 @@ public class WordKanji {
     @JoinColumn(name = "kanji_id", nullable = false)
     private Kanji kanji;
     
+    public WordKanji() {
+    	
+	}
+    
+    public WordKanji(Long id, Word word, Kanji kanji) {
+    	this.id = id;
+		this.word = word;
+		this.kanji = kanji;
+	}
+    
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
 

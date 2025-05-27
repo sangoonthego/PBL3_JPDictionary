@@ -26,4 +26,29 @@ public class PartOfSpeechService {
         
         return partOfSpeechRepository.findAll();
     }
+    
+    public List<PartOfSpeech> getAllPartsOfSpeech() {
+        return partOfSpeechRepository.findAll();
+    }
+
+    public PartOfSpeech getPartOfSpeechById(Long id) {
+        return partOfSpeechRepository.findById(id).orElse(null);
+    }
+
+    public PartOfSpeech createPartOfSpeech(PartOfSpeech pos) {
+        return partOfSpeechRepository.save(pos);
+    }
+
+    public PartOfSpeech updatePartOfSpeech(Long id, PartOfSpeech pos) {
+        PartOfSpeech existing = getPartOfSpeechById(id);
+        if (existing != null) {
+            pos.setId(id);
+            return partOfSpeechRepository.save(pos);
+        }
+        return null;
+    }
+
+    public void deletePartOfSpeech(Long id) {
+        partOfSpeechRepository.deleteById(id);
+    }
 }

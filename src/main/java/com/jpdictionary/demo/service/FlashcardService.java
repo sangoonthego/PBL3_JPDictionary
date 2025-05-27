@@ -25,4 +25,29 @@ public class FlashcardService {
         
         return flashcardRepository.findAll();
     }
+    
+    public Flashcard saveFlashcard(Flashcard flashcard) {
+        return flashcardRepository.save(flashcard);
+    }
+
+    public List<Flashcard> getAllFlashcards() {
+        return flashcardRepository.findAll();
+    }
+
+    public Flashcard getFlashcardById(Long id) {
+        return flashcardRepository.findById(id).orElse(null);
+    }
+
+    public Flashcard updateFlashcard(Long id, Flashcard flashcard) {
+        Flashcard existing = flashcardRepository.findById(id).orElse(null);
+        if (existing != null) {
+            flashcard.setId(id);
+            return flashcardRepository.save(flashcard);
+        }
+        return null;
+    }
+
+    public void deleteFlashcard(Long id) {
+        flashcardRepository.deleteById(id);
+    }
 }

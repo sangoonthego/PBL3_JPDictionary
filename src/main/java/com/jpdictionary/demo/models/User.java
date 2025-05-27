@@ -28,7 +28,20 @@ public class User {
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdAt;
     
-    public Long getId() { return id; }
+    public User() {
+		// Default constructor
+	}
+    
+    public User(Long id, String username, String password, String email, Role role, Date createdAt) {
+		this.id = id;
+		this.username = username;
+		this.password = password;
+		this.email = email;
+		this.role = role;
+		this.createdAt = createdAt;
+	}
+    
+	public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
 
     public String getUsername() { return username; }

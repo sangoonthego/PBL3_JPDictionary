@@ -24,6 +24,18 @@ public class Word {
 
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdAt;
+    
+    public Word() {
+    	
+    }
+    
+    public Word(String word, String reading, String meaning, PartOfSpeech partOfSpeech) {
+		this.word = word;
+		this.reading = reading;
+		this.meaning = meaning;
+		this.partOfSpeech = partOfSpeech;
+		this.createdAt = new Date(); // Set the creation date to now
+	}
 
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }

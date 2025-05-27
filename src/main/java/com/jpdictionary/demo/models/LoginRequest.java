@@ -1,9 +1,5 @@
 package com.jpdictionary.demo.models;
 
-import jakarta.persistence.*;
-import lombok.Data;
-import java.util.Date;
-
 
 public class LoginRequest {
     private String username;

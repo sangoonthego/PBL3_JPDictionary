@@ -17,5 +17,38 @@ public class Flashcard {
 
     @Column(name = "flashcard_name", nullable = false, length = 100)
     private String name;
+    
+    public Flashcard() {
+		
+	}
+    
+    public Flashcard(User user, String name) {
+		this.user = user;
+		this.name = name;
+	}
 
+	public Long getId() {
+		return id;
+	}
+	
+	public void setId(Long id) {
+		// TODO Auto-generated method stub
+		this.id = id;
+	}
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
 }
