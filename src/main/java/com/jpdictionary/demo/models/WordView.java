@@ -9,7 +9,7 @@ import lombok.Data;
 public class WordView {
 
     @Id
-    @OneToOne
+    //@OneToOne
     @JoinColumn(name = "word_id")
     private Long wordId;
 
