@@ -16,7 +16,9 @@ public class WordView {
     @Column(name = "view_count", nullable = false)
     private int viewCount = 0;
 
-    public WordView() {}
+    public WordView() {
+    	
+    }
 
     public WordView(Long wordId) {
         this.wordId = wordId;
