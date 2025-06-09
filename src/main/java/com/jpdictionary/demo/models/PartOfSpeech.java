@@ -12,31 +12,30 @@ public class PartOfSpeech {
     private Long id;
 
     @Column(nullable = false, unique = true)
-    private String name;
+    private String pos_name;
     
     public PartOfSpeech() {
-    	
-    }
+		// Default constructor
+	}
     
-    public PartOfSpeech(Long id, String name) {
-    			this.id = id;
-		this.name = name;
-    }
-    
-    public Long getId() {
-    	return id;
-    }
+    public PartOfSpeech(Long id, String pos_name) {
+		this.id = id;
+		this.pos_name = pos_name;
+	}
+
+	public Long getId() {
+		return id;
+	}
 
 	public void setId(Long id) {
-		// TODO Auto-generated method stub
 		this.id = id;
 	}
-	
-	public String getName() {
-		return name;
+
+	public String getPosName() {
+		return pos_name;
 	}
-	
-	public void setName(String name) {
-		this.name = name;
+
+	public void setPosName(String pos_name) {
+		this.pos_name = pos_name;
 	}
 }
