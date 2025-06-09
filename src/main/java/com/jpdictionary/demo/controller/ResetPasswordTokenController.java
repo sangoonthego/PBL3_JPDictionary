@@ -18,16 +18,27 @@ public class ResetPasswordTokenController {
     private ResetPasswordTokenService resetPasswordService;
 
     @PostMapping("/forgot")
-    public ResponseEntity<String> forgotPassword(@RequestParam String email) {
-        resetPasswordService.sendResetEmail(email);
-        return ResponseEntity.ok("Email khôi phục đã được gửi nếu tồn tại.");
+    public ResponseEntity<?> forgotPassword(@RequestParam String email) {
+        try {
+            resetPasswordService.sendResetEmail(email);
+            return ResponseEntity.ok("Email khôi phục đã được gửi nếu tồn tại.");
+        } catch (Exception e) {
+            // Có thể log lỗi ở đây
+            return ResponseEntity.status(500).body("Lỗi hệ thống, vui lòng thử lại sau.");
+        }
     }
 
     @PostMapping("/reset")
-    public ResponseEntity<String> resetPassword(@RequestParam String token,
-                                                @RequestParam String newPassword) {
-        resetPasswordService.resetPassword(token, newPassword);
-        return ResponseEntity.ok("Đặt lại mật khẩu thành công.");
+    public ResponseEntity<?> resetPassword(@RequestParam String token,
+                                           @RequestParam String newPassword) {
+        try {
+            resetPasswordService.resetPassword(token, newPassword);
+            return ResponseEntity.ok("Đặt lại mật khẩu thành công.");
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.status(400).body(e.getMessage());  // lỗi token sai, hết hạn...
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body("Lỗi hệ thống, vui lòng thử lại sau.");
+        }
     }
 }
 
