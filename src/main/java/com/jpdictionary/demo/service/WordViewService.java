@@ -5,6 +5,8 @@ import com.jpdictionary.demo.repository.WordViewRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class WordViewService {
 
@@ -13,17 +15,19 @@ public class WordViewService {
 
     public WordView getWordView(Long wordId) {
         return wordViewRepository.findById(wordId)
-                .orElseGet(() -> {
-                    WordView newView = new WordView();
-                    newView.setWordId(wordId);
-                    newView.setViewCount(0);
-                    return wordViewRepository.save(newView);
-                });
+                .orElse(null);
     }
 
     public WordView incrementViewCount(Long wordId) {
-        WordView wordView = getWordView(wordId);
-        wordView.setViewCount(wordView.getViewCount() + 1);
-        return wordViewRepository.save(wordView);
+        wordViewRepository.upsertAndIncrementView(wordId);
+        return getWordView(wordId); // Return the latest record after update
+    }
+
+    public List<WordView> getAllWordViewsSorted() {
+        return wordViewRepository.findAllByViewCount();
+    }
+
+    public List<WordView> getTop12WordViews() {
+        return wordViewRepository.findTop18ByViewCount();
     }
 }
