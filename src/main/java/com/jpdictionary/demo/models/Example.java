@@ -15,36 +15,56 @@ public class Example {
     @JoinColumn(name = "word_id", nullable = false)
     private Word word;
 
-    @Column(nullable = false)
+    @Column(name = "sentence_jp", nullable = false)
     private String sentenceJp;
+
+    @Column(name = "sentence_en", nullable = false)
+    private String sentenceEn;
     
     public Example() {
-    	
-    }
+		// Default constructor
+	}
     
-    public Example(Word word, String sentenceJp) {
-		this.word = word;
-		this.sentenceJp = sentenceJp;
-	}
-
-	public Long getId() {
-		return id;
-	}
-	
-	public void setId(Long id) {
-		// TODO Auto-generated method stub
+    public Example(Long id, Word word, String sentenceJp, String sentenceEn) {
 		this.id = id;
-	}  
-
-	public void setWord(Word word) {
 		this.word = word;
-	}
-
-	public String getSentenceJp() {
-		return sentenceJp;
-	}
-
-	public void setSentenceJp(String sentenceJp) {
 		this.sentenceJp = sentenceJp;
+		this.sentenceEn = sentenceEn;
 	}
+
+    // Explicit getter and setter for id
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    // Explicit getter and setter for word
+    public Word getWord() {
+        return word;
+    }
+
+    public void setWord(Word word) {
+        this.word = word;
+    }
+
+    // Explicit getter and setter for sentenceJp
+    public String getSentenceJp() {
+        return sentenceJp;
+    }
+
+    public void setSentenceJp(String sentenceJp) {
+        this.sentenceJp = sentenceJp;
+    }
+
+    // Explicit getter and setter for sentenceEn
+    public String getSentenceEn() {
+        return sentenceEn;
+    }
+
+    public void setSentenceEn(String sentenceEn) {
+        this.sentenceEn = sentenceEn;
+    }
 }
