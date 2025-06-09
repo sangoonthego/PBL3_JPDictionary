@@ -3,45 +3,56 @@ package com.jpdictionary.demo.controller;
 import com.jpdictionary.demo.models.Kanji;
 import com.jpdictionary.demo.service.KanjiService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+import java.util.*;
 
 @RestController
 @RequestMapping("/api/kanji")
+@CrossOrigin(origins = "http://localhost:3000")
 public class KanjiController {
 
     @Autowired
     private KanjiService kanjiService;
 
-    @GetMapping("/fetch")
-    public List<Kanji> fetchKanji() {
-        return kanjiService.getKanjiFromAPI();
-    }
-    
     @GetMapping
-    public List<Kanji> getAllKanji() {
-        return kanjiService.getAllKanji();
-    }
-
-    @GetMapping("/{id}")
-    public Kanji getKanjiById(@PathVariable Long id) {
-        return kanjiService.getKanjiById(id);
+    public ResponseEntity<?> getKanjiByLevel(@RequestParam(name = "jlpt_level") int jlptLevel) {
+        try {
+            List<Kanji> kanjiList = kanjiService.getKanjiByLevel(jlptLevel);
+            return ResponseEntity.ok(kanjiList);
+        } catch (RuntimeException e) {
+            return ResponseEntity.badRequest().body(Collections.singletonMap("message", e.getMessage()));
+        }
     }
 
     @PostMapping
-    public Kanji createKanji(@RequestBody Kanji kanji) {
-        return kanjiService.createKanji(kanji);
+    public ResponseEntity<?> addKanji(@RequestBody Kanji kanji) {
+        try {
+            Kanji saved = kanjiService.saveKanji(kanji);
+            return ResponseEntity.ok(saved);
+        } catch (RuntimeException e) {
+            return ResponseEntity.badRequest().body(Collections.singletonMap("message", e.getMessage()));
+        }
     }
 
     @PutMapping("/{id}")
-    public Kanji updateKanji(@PathVariable Long id, @RequestBody Kanji kanji) {
-        return kanjiService.updateKanji(id, kanji);
+    public ResponseEntity<?> updateKanji(@PathVariable Long id, @RequestBody Kanji updatedKanji) {
+        try {
+            Kanji updated = kanjiService.updateKanji(id, updatedKanji);
+            return ResponseEntity.ok(updated);
+        } catch (RuntimeException e) {
+            return ResponseEntity.badRequest().body(Collections.singletonMap("message", e.getMessage()));
+        }
     }
 
     @DeleteMapping("/{id}")
-    public String deleteKanji(@PathVariable Long id) {
-        kanjiService.deleteKanji(id);
-        return "Kanji deleted successfully!";
+    public ResponseEntity<?> deleteKanji(@PathVariable Long id) {
+        try {
+            kanjiService.deleteKanji(id);
+            return ResponseEntity.ok(Collections.singletonMap("message", "Xoá Kanji thành công"));
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(500).body(Collections.singletonMap("message", e.getMessage()));
+        }
     }
 }
